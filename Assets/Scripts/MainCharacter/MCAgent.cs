@@ -11,14 +11,44 @@ namespace MainCharacter
         [SerializeField, Tooltip("The speed that the player will move with no other modifiers.")]
         private float playerSpeed;
 
-        // Drag and drop the controller you want to use onto this
         [SerializeField, Tooltip("Drag the players character controller onto this field.")]
         private CharacterController characterController;
 
+        [SerializeField, Tooltip("The data for the pushing raycast.")]
+        private Data.SRaycast sPushRayCast;
+
         void Update()
         {
-            Vector2 characterCompleteMove = PlayerMovement();
-            characterController.Move(new Vector3(characterCompleteMove.x, 0, characterCompleteMove.y));
+            // Collect the move data here
+            Vector2 characterCompleteMoveV2 = PlayerMovement();
+            Vector3 characterCompleteMoveV3 = new Vector3(characterCompleteMoveV2.x, 0, characterCompleteMoveV2.y);
+
+            // Using the sqrMagnitude because it avoids using sqrt which is a costly calculation
+            // Use this section to activate anything that needs the players movement to occur.
+            // Does not include external movement.
+            if (characterCompleteMoveV3.sqrMagnitude > 0.01f)
+            {
+                // This will be snappy.  Can update it later to be more smooth.
+                // Look at calculation might not be needed either.
+                transform.LookAt(transform.position + characterCompleteMoveV3);
+
+                PushBlock();
+            }
+
+            characterController.Move(characterCompleteMoveV3);
+        }
+
+        private void PushBlock()
+        {
+            RaycastHit hitInfo;
+            if (Physics.Raycast(sPushRayCast.Origin(transform.position), sPushRayCast.Direction(transform), out hitInfo, sPushRayCast.MaxDistance, sPushRayCast.LayerMask))
+            {
+                if (hitInfo.transform.CompareTag(Data.Globals.StaticTagStrings.SMALL_BLOCK))
+                {
+                    // Pushing block logic goes here.  Call to the block and trigger the function when it gets programmed.
+                    // hitInfo.collider.GetComponent()
+                }
+            }
         }
 
         /// <summary>
