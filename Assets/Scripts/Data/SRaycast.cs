@@ -11,10 +11,10 @@ namespace Data
     {
 
         [SerializeField, Tooltip("Offset from the raycast starting point which will be the object that is starting the cast.")]
-        private Vector3 LocalOffset;
+        private Vector3 localOffset;
 
         [SerializeField, Tooltip("Set to true if you wish to use the objects local direction instead of using world direction.")]
-        private bool IsDirectionLocal;
+        private bool isDirectionLocal;
 
         [SerializeField, Tooltip("The direction the ray will be cast in.  The direction does not contain distance.")]
         private Vector3 direction;
@@ -32,7 +32,7 @@ namespace Data
         /// <returns>Returns the direction of the ray.</returns>
         public Vector3 Direction(Transform rayTransform)
         {
-            if (IsDirectionLocal)
+            if (isDirectionLocal)
             {
                 return rayTransform.TransformDirection(direction);
             }
@@ -46,7 +46,7 @@ namespace Data
         /// <returns>The origin point plus the local offset.</returns>
         public Vector3 Origin(Vector3 startPoint)
         {
-            return LocalOffset + startPoint;
+            return localOffset + startPoint;
         }
     }
 
