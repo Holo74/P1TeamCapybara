@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 119935573028536928}
   m_Layer: 0
   m_Name: MainCharacterAgent
-  m_TagString: Player
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -48,7 +48,7 @@ GameObject:
   - component: {fileID: 2928984256869421424}
   m_Layer: 0
   m_Name: PlayerBody
-  m_TagString: Player
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -62,7 +62,7 @@ Transform:
   m_GameObject: {fileID: 3840970511417206481}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -182,14 +182,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerSpeed: 10
   characterController: {fileID: 8490555644187202875}
-  sPushRayCast:
-    localOffset: {x: 0, y: 0, z: 0}
-    isDirectionLocal: 0
-    direction: {x: 0, y: 0, z: 0}
-    MaxDistance: 0
-    LayerMask:
-      serializedVersion: 2
-      m_Bits: 0
 --- !u!1 &7247948768246850546
 GameObject:
   m_ObjectHideFlags: 0

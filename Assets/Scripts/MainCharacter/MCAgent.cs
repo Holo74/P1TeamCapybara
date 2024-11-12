@@ -7,8 +7,6 @@ namespace MainCharacter
 {
     public class MCAgent : MonoBehaviour
     {
-        // Used when referencing the player character
-        public static MCAgent MCAGENT { get; private set; }
 
         [SerializeField, Tooltip("The speed that the player will move with no other modifiers.")]
         private float playerSpeed;
@@ -18,12 +16,6 @@ namespace MainCharacter
 
         [SerializeField, Tooltip("The data for the pushing raycast.")]
         private Data.SRaycast sPushRayCast;
-
-
-        void Start()
-        {
-            MCAGENT = this;
-        }
 
         void Update()
         {
@@ -46,9 +38,6 @@ namespace MainCharacter
             characterController.Move(characterCompleteMoveV3);
         }
 
-        /// <summary>
-        /// Logic for pushing blocks.  Currently only handles small blocks.
-        /// </summary>
         private void PushBlock()
         {
             RaycastHit hitInfo;

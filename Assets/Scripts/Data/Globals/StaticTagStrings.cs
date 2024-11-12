@@ -13,12 +13,6 @@ namespace Data.Globals
     {
         // This is the tag that will be used to declare an object is a small block
         public const string SMALL_BLOCK = "SmallBlock";
-
-        // Player Tag
-        public const string PLAYER = "Player";
-
-        // Environment Triggers
-        public const string TRIGGER = "Trigger";
     }
 
 }
