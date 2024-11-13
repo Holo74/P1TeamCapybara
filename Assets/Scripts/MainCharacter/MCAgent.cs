@@ -1,7 +1,9 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEditor.EditorTools;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 namespace MainCharacter
 {
@@ -16,13 +18,31 @@ namespace MainCharacter
         [SerializeField, Tooltip("Drag the players character controller onto this field.")]
         private CharacterController characterController;
 
+
         [SerializeField, Tooltip("The data for the pushing raycast.")]
         private Data.SRaycast sPushRayCast;
 
 
+        [SerializeField, Tooltip("Raycast for detecting objects that can be picked up.")]
+        private Data.SRaycast sPickupRayCast;
+
+        // Reference to the object that the player is picking up.
+        private GameObject pickedUpObject { get; set; }
+
+        // This region only accepts inputs that the player will be using.  It will only pull from the global input system.
+        // Set these on Start.
+        #region Input Action
+        private InputAction movementAction { get; set; }
+
+        // This is named as such so that it follows the documentation in the GDD
+        private InputAction actionAction { get; set; }
+        #endregion
+
         void Start()
         {
             MCAGENT = this;
+            movementAction = InputSystem.actions.FindAction("Move");
+            actionAction = InputSystem.actions.FindAction("Action");
         }
 
         void Update()
@@ -42,6 +62,10 @@ namespace MainCharacter
 
                 PushBlock();
             }
+
+
+            // Code block for picking up and dropping small objects in the scene.
+
 
             characterController.Move(characterCompleteMoveV3);
         }
@@ -69,9 +93,7 @@ namespace MainCharacter
         private Vector2 PlayerMoveDirection()
         {
             // Will only display the direction of the input.  Will not have modifiers used in final move.
-            Vector2 outputDirection = Vector2.zero;
-            outputDirection.x = Input.GetAxis("Horizontal");
-            outputDirection.y = Input.GetAxis("Vertical");
+            Vector2 outputDirection = movementAction.ReadValue<Vector2>();
             return outputDirection;
         }
 
