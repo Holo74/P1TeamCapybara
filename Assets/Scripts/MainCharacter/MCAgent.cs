@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEditor.EditorTools;
@@ -19,6 +20,9 @@ namespace MainCharacter
         [SerializeField, Tooltip("The data for the pushing raycast.")]
         private Data.SRaycast sPushRayCast;
 
+        [SerializeField, Tooltip("Prefab to be instantiated when a spell is cast. Probably reworked later.")]
+        private GameObject spell;
+
 
         void Start()
         {
@@ -34,7 +38,7 @@ namespace MainCharacter
             // Using the sqrMagnitude because it avoids using sqrt which is a costly calculation
             // Use this section to activate anything that needs the players movement to occur.
             // Does not include external movement.
-            if (characterCompleteMoveV3.sqrMagnitude > 0.01f)
+            if (characterCompleteMoveV3.sqrMagnitude > 0.00f)
             {
                 // This will be snappy.  Can update it later to be more smooth.
                 // Look at calculation might not be needed either.
@@ -44,6 +48,8 @@ namespace MainCharacter
             }
 
             characterController.Move(characterCompleteMoveV3);
+
+            CheckSpellCast();
         }
 
         /// <summary>
@@ -59,6 +65,18 @@ namespace MainCharacter
                     // Pushing block logic goes here.  Call to the block and trigger the function when it gets programmed.
                     // hitInfo.collider.GetComponent()
                 }
+            }
+        }
+
+        /// <summary>
+        /// Logic for casting spells. Currently only casts Push
+        /// </summary>
+        private void CheckSpellCast()
+        {
+            var cast = Input.GetKeyDown(KeyCode.I);
+            if (cast)
+            {
+                var spellEffect = Instantiate(spell, transform.position, transform.rotation);
             }
         }
 
@@ -86,7 +104,7 @@ namespace MainCharacter
 
             outMove = PlayerMoveDirection() * playerSpeed;
 
-            return outMove * Time.fixedDeltaTime;
+            return outMove * Time.deltaTime;
         }
 
     }
