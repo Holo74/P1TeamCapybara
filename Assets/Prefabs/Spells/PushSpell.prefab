@@ -120,6 +120,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   width: 4
   length: 2
-  force: 200
+  force: 500
   effectTrigger: {fileID: 3066375015253698979}
   duration: 0.2
