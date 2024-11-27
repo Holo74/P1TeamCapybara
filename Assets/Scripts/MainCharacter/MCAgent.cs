@@ -23,6 +23,7 @@ namespace MainCharacter
         [SerializeField, Tooltip("Prefab to be instantiated when a spell is cast. Probably reworked later.")]
         private GameObject spell;
 
+        private bool spellsEnabled;
 
         void Start()
         {
@@ -74,9 +75,10 @@ namespace MainCharacter
         private void CheckSpellCast()
         {
             var cast = Input.GetKeyDown(KeyCode.I);
-            if (cast)
+            if (spellsEnabled && cast)
             {
                 var spellEffect = Instantiate(spell, transform.position, transform.rotation);
+                StartCoroutine(castDelay(3.0f));
             }
         }
 
@@ -105,6 +107,23 @@ namespace MainCharacter
             outMove = PlayerMoveDirection() * playerSpeed;
 
             return outMove * Time.deltaTime;
+        }
+
+        public void EnableSpells()
+        {
+            spellsEnabled = true;
+        }
+
+        /// <summary>
+        /// Coroutine to temporarily disable casting spells
+        /// </summary>
+        /// <param name="seconds">Number of seconds to wait</param>
+        /// <returns></returns>
+        private IEnumerator castDelay(float seconds)
+        {
+            spellsEnabled = false;
+            yield return new WaitForSeconds(seconds);
+            spellsEnabled = true;
         }
 
     }
