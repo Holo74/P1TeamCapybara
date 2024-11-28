@@ -1,6 +1,8 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Data;
+using Environment.Interactables;
 using UnityEditor.EditorTools;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -23,20 +25,21 @@ namespace MainCharacter
         private Data.SRaycast sPushRayCast;
 
 
-        [SerializeField, Tooltip("Raycast for detecting objects that can be picked up.")]
-        private Data.SRaycast sPickupRayCast;
-
-        // Reference to the object that the player is picking up.
-        private GameObject pickedUpObject { get; set; }
+        [SerializeField, Tooltip("The component that is able to handle picking up logic.")]
+        private Extensions.MCAgentPickupController pickupController;
 
         // This region only accepts inputs that the player will be using.  It will only pull from the global input system.
         // Set these on Start.
         #region Input Action
+        // This action is directing the players movement.
         private InputAction movementAction { get; set; }
 
-        // This is named as such so that it follows the documentation in the GDD
+        // This is named as such so that it follows the documentation in the GDD.
         private InputAction actionAction { get; set; }
         #endregion
+
+
+
 
         void Start()
         {
@@ -110,7 +113,6 @@ namespace MainCharacter
 
             return outMove * Time.fixedDeltaTime;
         }
-
     }
 
 }

@@ -48,6 +48,19 @@ namespace Data
         {
             return localOffset + startPoint;
         }
+
+        /// <summary>
+        /// Uses the SRaycast Data type uniformally when it's needed to be used.
+        /// </summary>
+        /// <param name="rayData">The struct that contains the data.</param>
+        /// <param name="originUsed">Where the ray originates from.</param>
+        /// <param name="direction">Whether world or local transform.</param>
+        /// <param name="rayHitData">The hit data if there is any.</param>
+        /// <returns>Returns true if the ray hits something.</returns>
+        public static bool CastRayUsingSRaycast(SRaycast rayData, Vector3 originUsed, Transform baseTransform, out RaycastHit rayHitData)
+        {
+            return Physics.Raycast(rayData.Origin(originUsed), rayData.Direction(baseTransform), out rayHitData, rayData.MaxDistance, rayData.LayerMask);
+        }
     }
 
 }
