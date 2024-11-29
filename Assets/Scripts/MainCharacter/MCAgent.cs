@@ -88,7 +88,7 @@ namespace MainCharacter
         private void PushBlock()
         {
             RaycastHit hitInfo;
-            if (Physics.Raycast(sPushRayCast.Origin(transform.position), sPushRayCast.Direction(transform), out hitInfo, sPushRayCast.MaxDistance, sPushRayCast.LayerMask))
+            if (SRaycast.CastRayUsingSRaycast(sPushRayCast, transform.position, transform, out hitInfo))
             {
                 if (hitInfo.transform.CompareTag(Data.Globals.StaticTagStrings.SMALL_BLOCK))
                 {
