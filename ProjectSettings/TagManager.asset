@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Trigger
   - ObjectHolder
+  - SmallBlock
   layers:
   - Default
   - TransparentFX

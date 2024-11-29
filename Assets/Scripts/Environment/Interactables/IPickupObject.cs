@@ -40,6 +40,8 @@ namespace Environment.Interactables
         /// <param name="entity">The position that the object is being placed.</param>
         void PlaceObject(GameObject entity, Vector3 placedPosition);
 
+        float PlaceDistanceFromEntity();
+
     }
 
 }

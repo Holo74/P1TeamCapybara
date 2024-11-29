@@ -68,7 +68,10 @@ namespace MainCharacter
 
 
             // Code block for picking up and dropping small objects in the scene.
-
+            if (actionAction.WasPressedThisFrame())
+            {
+                pickupController.InteractionAttempted();
+            }
 
             characterController.Move(characterCompleteMoveV3);
         }
