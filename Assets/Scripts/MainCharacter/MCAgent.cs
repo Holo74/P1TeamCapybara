@@ -24,6 +24,10 @@ namespace MainCharacter
         [SerializeField, Tooltip("The data for the pushing raycast.")]
         private Data.SRaycast sPushRayCast;
 
+        [SerializeField, Tooltip("Prefab to be instantiated when a spell is cast. Probably reworked later.")]
+        private GameObject spell;
+
+        private bool spellsEnabled;
 
         [SerializeField, Tooltip("The component that is able to handle picking up logic.")]
         private Extensions.MCAgentPickupController pickupController;
@@ -57,7 +61,7 @@ namespace MainCharacter
             // Using the sqrMagnitude because it avoids using sqrt which is a costly calculation
             // Use this section to activate anything that needs the players movement to occur.
             // Does not include external movement.
-            if (characterCompleteMoveV3.sqrMagnitude > 0.01f)
+            if (characterCompleteMoveV3.sqrMagnitude > 0.00f)
             {
                 // This will be snappy.  Can update it later to be more smooth.
                 // Look at calculation might not be needed either.
@@ -74,6 +78,8 @@ namespace MainCharacter
             }
 
             characterController.Move(characterCompleteMoveV3);
+
+            CheckSpellCast();
         }
 
         /// <summary>
@@ -89,6 +95,19 @@ namespace MainCharacter
                     // Pushing block logic goes here.  Call to the block and trigger the function when it gets programmed.
                     // hitInfo.collider.GetComponent()
                 }
+            }
+        }
+
+        /// <summary>
+        /// Logic for casting spells. Currently only casts Push
+        /// </summary>
+        private void CheckSpellCast()
+        {
+            var cast = Input.GetKeyDown(KeyCode.I);
+            if (spellsEnabled && cast)
+            {
+                var spellEffect = Instantiate(spell, transform.position, transform.rotation);
+                StartCoroutine(castDelay(3.0f));
             }
         }
 
@@ -114,7 +133,24 @@ namespace MainCharacter
 
             outMove = PlayerMoveDirection() * playerSpeed;
 
-            return outMove * Time.fixedDeltaTime;
+            return outMove * Time.deltaTime;
+        }
+
+        public void EnableSpells()
+        {
+            spellsEnabled = true;
+        }
+
+        /// <summary>
+        /// Coroutine to temporarily disable casting spells
+        /// </summary>
+        /// <param name="seconds">Number of seconds to wait</param>
+        /// <returns></returns>
+        private IEnumerator castDelay(float seconds)
+        {
+            spellsEnabled = false;
+            yield return new WaitForSeconds(seconds);
+            spellsEnabled = true;
         }
     }
 
