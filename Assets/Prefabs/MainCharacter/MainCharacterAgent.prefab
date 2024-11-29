@@ -1,5 +1,82 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &108044331408990039
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7968818242995945614}
+  - component: {fileID: 6725880158878310952}
+  - component: {fileID: 2690951646189200944}
+  m_Layer: 0
+  m_Name: ObjectCarrier
+  m_TagString: ObjectHolder
+  m_Icon: {fileID: -964228994112308473, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7968818242995945614
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 108044331408990039}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: -0.23, z: 1.12}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6331293541870683824}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!95 &6725880158878310952
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 108044331408990039}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: b0970f44c64b245da8b1d7a3069e89ea, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &2690951646189200944
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 108044331408990039}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: db3c264051602a6fb83c8aa8ccb033a4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animationBehaviour: {fileID: 6725880158878310952}
+  placeDistance: 0.6
+  sPickupRayCast:
+    localOffset: {x: 0, y: -0.5, z: 0}
+    isDirectionLocal: 1
+    direction: {x: 0, y: 0, z: 1}
+    MaxDistance: 1
+    LayerMask:
+      serializedVersion: 2
+      m_Bits: 4294967295
+  mCAgent: {fileID: 2928984256869421424}
 --- !u!1 &3751483059068293741
 GameObject:
   m_ObjectHideFlags: 0
@@ -67,6 +144,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 9191833791068366635}
+  - {fileID: 7968818242995945614}
   m_Father: {fileID: 119935573028536928}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &6343768571117048153
@@ -190,6 +268,7 @@ MonoBehaviour:
     LayerMask:
       serializedVersion: 2
       m_Bits: 0
+  pickupController: {fileID: 2690951646189200944}
 --- !u!1 &7247948768246850546
 GameObject:
   m_ObjectHideFlags: 0

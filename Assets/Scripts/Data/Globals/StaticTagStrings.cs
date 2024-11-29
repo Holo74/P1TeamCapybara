@@ -14,6 +14,9 @@ namespace Data.Globals
         // This is the tag that will be used to declare an object is a small block
         public const string SMALL_BLOCK = "SmallBlock";
 
+        // Blocks that require moving into to move or magic to pickup
+        public const string LARGE_BLOCK = "LargeBlock";
+
         // Player Tag
         public const string PLAYER = "Player";
 
