@@ -67,7 +67,7 @@ namespace MainCharacter
                 // Look at calculation might not be needed either.
                 transform.LookAt(transform.position + characterCompleteMoveV3);
 
-                PushBlock();
+                PushBlock(ref characterCompleteMoveV3);
             }
 
 
@@ -77,7 +77,7 @@ namespace MainCharacter
                 pickupController.InteractionAttempted();
             }
 
-            characterController.Move(characterCompleteMoveV3);
+            characterController.Move(characterCompleteMoveV3 * Time.deltaTime);
 
             CheckSpellCast();
         }
@@ -85,15 +85,14 @@ namespace MainCharacter
         /// <summary>
         /// Logic for pushing blocks.  Currently only handles small blocks.
         /// </summary>
-        private void PushBlock()
+        private void PushBlock(ref Vector3 direction)
         {
             RaycastHit hitInfo;
             if (SRaycast.CastRayUsingSRaycast(sPushRayCast, transform.position, transform, out hitInfo))
             {
-                if (hitInfo.transform.CompareTag(Data.Globals.StaticTagStrings.SMALL_BLOCK))
+                if (hitInfo.transform.CompareTag(Data.Globals.StaticTagStrings.SHOVEABLE))
                 {
-                    // Pushing block logic goes here.  Call to the block and trigger the function when it gets programmed.
-                    // hitInfo.collider.GetComponent()
+                    direction = hitInfo.transform.GetComponent<AShoveable>().Shoving(direction);
                 }
             }
         }
@@ -133,7 +132,7 @@ namespace MainCharacter
 
             outMove = PlayerMoveDirection() * playerSpeed;
 
-            return outMove * Time.deltaTime;
+            return outMove;
         }
 
         public void EnableSpells()

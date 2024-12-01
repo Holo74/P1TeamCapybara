@@ -44,4 +44,9 @@ namespace Environment.Interactables
 
     }
 
+    public enum PickupState
+    {
+        PickedUp,
+        Placed
+    }
 }

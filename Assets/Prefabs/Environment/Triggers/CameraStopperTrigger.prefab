@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 3791258892678518467}
   - component: {fileID: 1079054006872209202}
   - component: {fileID: 1194335821338480904}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: CameraStopperTrigger
   m_TagString: Trigger
   m_Icon: {fileID: -964228994112308473, guid: 0000000000000000d000000000000000, type: 0}
@@ -66,5 +66,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7b1c0a1b7c96450f59144c46b569b100, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  followOnX: 0
-  followOnY: 0
+  stopFollowingOnX: 0
+  stopFollowingOnZ: 0
