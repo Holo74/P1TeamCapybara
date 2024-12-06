@@ -294,7 +294,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1750906360698144405, guid: e51036b6826361cad88c767ef5f7c50e, type: 3}
       propertyPath: ResistanceMod
-      value: 5.64
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 3390170497511983857, guid: e51036b6826361cad88c767ef5f7c50e, type: 3}
       propertyPath: m_LocalPosition.x
