@@ -52,7 +52,7 @@ namespace MainCharacter
             actionAction = InputSystem.actions.FindAction("Action");
         }
 
-        void Update()
+        void FixedUpdate()
         {
             // Collect the move data here
             Vector2 characterCompleteMoveV2 = PlayerMovement();
@@ -77,7 +77,7 @@ namespace MainCharacter
                 pickupController.InteractionAttempted();
             }
 
-            characterController.Move(characterCompleteMoveV3);
+            characterController.Move(characterCompleteMoveV3 * Time.fixedDeltaTime);
 
             CheckSpellCast();
         }
@@ -133,7 +133,7 @@ namespace MainCharacter
 
             outMove = PlayerMoveDirection() * playerSpeed;
 
-            return outMove * Time.deltaTime;
+            return outMove;
         }
 
         public void EnableSpells()
