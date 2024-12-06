@@ -27,6 +27,12 @@ namespace Environment.Interactables
         // Whether the pillar can be pushed.
         private bool canShove { get; set; }
 
+        private Animator pillarAnimations { get; set; }
+
+        void Start()
+        {
+            pillarAnimations = GetComponent<Animator>();
+        }
 
         void Update()
         {
@@ -44,6 +50,7 @@ namespace Environment.Interactables
         public void EnablePushing()
         {
             canShove = true;
+            pillarAnimations.SetBool("Unstable", true);
         }
 
 
@@ -65,6 +72,7 @@ namespace Environment.Interactables
         private void PushPillar()
         {
             canShove = false;
+            pillarAnimations.SetTrigger("Falling");
             // Disable magic bubble
         }
 
