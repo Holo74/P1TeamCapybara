@@ -11,10 +11,7 @@ public class WeaponPickup : MonoBehaviour
     
     void OnTriggerEnter(Collider other)
     {        
-        // if(isColliding) return;
-        //     isColliding = true;
-
-        if (other.CompareTag("Player"))  // Ensure the player has a "Player" tag
+        if (other.CompareTag(Constants.Tags.player))  // Ensure the player has a "Player" tag
         {
             PlayerWeaponManager weaponManager = other.GetComponent<PlayerWeaponManager>();
             if (weaponManager != null)
@@ -26,24 +23,15 @@ public class WeaponPickup : MonoBehaviour
                 }
                 else
                 {
-                    weaponManager.PickupWeapon(weaponData);
-                    Debug.Log("Destroying the display weapon = "+gameObject.ToString());
+                    weaponManager.PickupWeapon(weaponData, true);
+                    Debug.Log("Destroying the weapon in environment = "+gameObject.ToString());
                     Destroy(gameObject);  // Destroy the weapon pickup object after pickup
                 }
                 
             }
         }
 
-       // StartCoroutine(Reset());  
     }
-
-
-    // IEnumerator Reset()
-    // {
-    //     yield return new WaitForEndOfFrame();
-    //     isColliding = false;
-    // }
-
 }
 
 

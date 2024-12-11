@@ -12,26 +12,17 @@ public class PlayerWeaponManager : MonoBehaviour
 
     public WeaponData currentWeaponData;
 
-    private bool pickingWeapon;
-
-    public void Awake(){
-        pickingWeapon = false; 
-    }
 
     // This method is called by the weapon as it allows it to pass weapondata as a reference to the Player
     // Once the player has the weapondata information it can do the job of creating a new instance 
-    public void PickupWeapon(WeaponData newWeaponData)
+    public void PickupWeapon(WeaponData newWeaponData, bool isDiffWeapon)
     {
-            if (currentWeaponData != null)
+        if (currentWeaponData != null)
         {
-            if (newWeaponData.weaponType == currentWeaponData.weaponType)
+            if (isDiffWeapon)
             {
-                // Trigger has run again, and so you don't need to pickup same weapon again
-                return;
-            }
-            else 
-            {
-                Debug.Log("Destroying current weapon that was created: " + currentWeapon);
+                // If a new weapon is being assigned then destroy the current weapon that player is holding
+                Debug.Log("Destroying current weapon that player is holding: " + currentWeapon);
                 Destroy(currentWeapon);
             }
         }
