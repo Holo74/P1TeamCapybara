@@ -67,7 +67,7 @@ namespace MainCharacter
                 // Look at calculation might not be needed either.
                 transform.LookAt(transform.position + characterCompleteMoveV3);
 
-                PushBlock(ref characterCompleteMoveV3);
+                ShoveObject(ref characterCompleteMoveV3);
             }
 
 
@@ -85,10 +85,10 @@ namespace MainCharacter
         /// <summary>
         /// Logic for pushing blocks.  Currently only handles small blocks.
         /// </summary>
-        private void PushBlock(ref Vector3 direction)
+        private void ShoveObject(ref Vector3 direction)
         {
             RaycastHit hitInfo;
-            if (SRaycast.CastRayUsingSRaycast(sPushRayCast, transform.position, transform, out hitInfo))
+            if (SRaycast.CastRayUsingSRaycast(sPushRayCast, transform.position, transform, out hitInfo, true))
             {
                 if (hitInfo.transform.CompareTag(Data.Globals.StaticTagStrings.SHOVEABLE))
                 {

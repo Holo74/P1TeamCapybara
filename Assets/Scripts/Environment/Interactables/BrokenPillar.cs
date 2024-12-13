@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Environment.Toggleables;
 using UnityEngine;
 
 
@@ -15,6 +16,9 @@ namespace Environment.Interactables
         private float requiredShoveTime;
         [SerializeField, Tooltip("The time that the player needs to not push the pillar for the time to push to reset.")]
         private float resetRequiredTime = 1f;
+
+        [SerializeField, Tooltip("The barrier that we're disabling.")]
+        private TransparentBarrier barrier;
 
 
         // The magic structure class should go here so that it can be disabled when the pillar is knocked over.
@@ -73,7 +77,7 @@ namespace Environment.Interactables
         {
             canShove = false;
             pillarAnimations.SetTrigger("Falling");
-            // Disable magic bubble
+            barrier?.SetBarrier(false);
         }
 
 

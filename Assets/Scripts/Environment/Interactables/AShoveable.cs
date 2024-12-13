@@ -5,10 +5,13 @@ using UnityEngine;
 namespace Environment.Interactables
 {
 
-    [RequireComponent(typeof(CharacterController))]
     public class AShoveable : MonoBehaviour
     {
-        private CharacterController shoveableController { get; set; }
+        // The rigidbody that'll be moved.
+        private Rigidbody moveableRigidbody { get; set; }
+
+        // The amount of frames needed for the velocity to be cancelled out.
+        private int shoveFrameCount { get; set; }
 
         [SerializeField, Tooltip("A higher resistance mod will make the object move slower compared to the player.")]
         [Range(.01f, 1000f)]
@@ -16,14 +19,31 @@ namespace Environment.Interactables
 
         void Start()
         {
-            shoveableController = GetComponent<CharacterController>();
+            moveableRigidbody = GetComponent<Rigidbody>();
+        }
+
+        void FixedUpdate()
+        {
+            // Cancelling out the velocity after x frames.
+            if (shoveFrameCount > 0)
+            {
+                shoveFrameCount--;
+                if (shoveFrameCount == 0)
+                {
+                    moveableRigidbody.velocity = Vector3.zero;
+                }
+
+            }
         }
 
         // This will be called in the Update when the player moves
         public virtual Vector3 Shoving(Vector3 direction)
         {
+            // The amount of frames the velocity will be kept at.
+            shoveFrameCount = 2;
+
             Vector3 moveWithResistance = direction / ResistanceMod;
-            shoveableController.Move(moveWithResistance * Time.deltaTime);
+            moveableRigidbody.velocity = moveWithResistance;
             return moveWithResistance;
 
         }
