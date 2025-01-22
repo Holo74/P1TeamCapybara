@@ -23,6 +23,18 @@ namespace Environment.Triggers
             {
                 Destroy(gameObject);
             }
+
+            int sceneCount = SceneManager.loadedSceneCount;
+            string mainScene = gameObject.scene.name;
+
+            for (int i = 0; i < sceneCount; i++)
+            {
+                Scene scene = SceneManager.GetSceneAt(i);
+                if (scene.name != mainScene)
+                {
+                    loadedScenes.Add(scene.name);
+                }
+            }
         }
 
         // Update is called once per frame

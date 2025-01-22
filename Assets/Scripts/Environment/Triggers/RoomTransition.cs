@@ -1,3 +1,4 @@
+using Cinemachine;
 using Data.Globals;
 using System.Collections;
 using System.Collections.Generic;
@@ -12,11 +13,26 @@ namespace Environment.Triggers
         [SerializeField, Tooltip("The scenes which will be loaded")]
         private Object[] transitionScenes;
 
+        [SerializeField, Tooltip("Virtual camera to use in this room")]
+        private CinemachineVirtualCamera roomCamera;
+
         private void OnTriggerEnter(Collider other)
         {
             if (other.CompareTag(StaticTagStrings.PLAYER))
             {
+                roomCamera.enabled = true;
+                roomCamera.Follow = other.transform;
+
                 SceneLoader.loader.LoadScenes(transitionScenes.Select(scene => scene.name));
+            }
+        }
+
+        private void OnTriggerExit(Collider other)
+        {
+            if (other.CompareTag(StaticTagStrings.PLAYER))
+            {
+                roomCamera.enabled = false;
+                roomCamera.Follow = null;
             }
         }
 
