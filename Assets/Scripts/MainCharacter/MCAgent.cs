@@ -29,6 +29,10 @@ namespace MainCharacter
 
         private bool spellsEnabled;
 
+        private bool inputDisabled;
+
+        private Vector2 forcedMovementDestination;
+
         [SerializeField, Tooltip("The component that is able to handle picking up logic.")]
         private Extensions.MCAgentPickupController pickupController;
 
@@ -48,6 +52,7 @@ namespace MainCharacter
         void Start()
         {
             MCAGENT = this;
+            inputDisabled = false;
             movementAction = InputSystem.actions.FindAction("Move");
             actionAction = InputSystem.actions.FindAction("Action");
         }
@@ -55,8 +60,18 @@ namespace MainCharacter
         void FixedUpdate()
         {
             // Collect the move data here
-            Vector2 characterCompleteMoveV2 = PlayerMovement();
-            Vector3 characterCompleteMoveV3 = new Vector3(characterCompleteMoveV2.x, 0, characterCompleteMoveV2.y);
+            Vector2 characterCompleteMoveV2 = Vector2.zero;
+
+            if (inputDisabled)
+            {
+                characterCompleteMoveV2 = ForcedMovement();
+            }
+            else
+            {
+                characterCompleteMoveV2 = PlayerMovement();
+            }
+
+            Vector3 characterCompleteMoveV3 = fromVector2(characterCompleteMoveV2);
 
             // Using the sqrMagnitude because it avoids using sqrt which is a costly calculation
             // Use this section to activate anything that needs the players movement to occur.
@@ -70,16 +85,12 @@ namespace MainCharacter
                 PushBlock();
             }
 
+            characterController.Move(characterCompleteMoveV3);
 
-            // Code block for picking up and dropping small objects in the scene.
-            if (actionAction.WasPressedThisFrame())
+            if (!inputDisabled)
             {
-                pickupController.InteractionAttempted();
+                CheckSpellCast();
             }
-
-            characterController.Move(characterCompleteMoveV3 * Time.fixedDeltaTime);
-
-            CheckSpellCast();
         }
 
         /// <summary>
@@ -131,7 +142,28 @@ namespace MainCharacter
             // Set to zero in case the re assignment doesn't happen later.
             Vector2 outMove = Vector2.zero;
 
-            outMove = PlayerMoveDirection() * playerSpeed;
+            outMove = PlayerMoveDirection() * playerSpeed * Time.fixedDeltaTime;
+
+            return outMove;
+        }
+
+        /// <summary>
+        /// Continues movement toward a destination, ending when close enough
+        /// </summary>
+        /// <returns></returns>
+        private Vector2 ForcedMovement()
+        {
+            Vector2 outMove = Vector2.zero;
+            Vector2 difference = (forcedMovementDestination - fromVector3(transform.position));
+            if (difference.magnitude < playerSpeed * Time.fixedDeltaTime)
+            {
+                inputDisabled = false;
+                outMove = difference;
+            }
+            else
+            {
+                outMove = difference.normalized * playerSpeed * Time.fixedDeltaTime;
+            }
 
             return outMove;
         }
@@ -139,6 +171,19 @@ namespace MainCharacter
         public void EnableSpells()
         {
             spellsEnabled = true;
+        }
+
+        /// <summary>
+        /// Forces player to move to a position without allowing inputs
+        /// </summary>
+        /// <param name="destination"></param>
+        public void ForceMovement(Vector3 destination)
+        {
+            // For now, simply ignore other triggers
+            if (inputDisabled) return;
+
+            forcedMovementDestination = fromVector3(destination);
+            inputDisabled = true;
         }
 
         /// <summary>
@@ -151,6 +196,21 @@ namespace MainCharacter
             spellsEnabled = false;
             yield return new WaitForSeconds(seconds);
             spellsEnabled = true;
+        }
+
+        /// <summary>
+        /// Our Vector2 should use x and z, not x and y
+        /// </summary>
+        /// <param name="from"></param>
+        /// <returns></returns>
+        private Vector2 fromVector3(Vector3 from)
+        {
+            return new Vector2(from.x, from.z);
+        }
+
+        private Vector3 fromVector2(Vector2 from)
+        {
+            return new Vector3(from.x, 0, from.y);
         }
     }
 
