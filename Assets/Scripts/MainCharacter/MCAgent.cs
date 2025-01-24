@@ -57,7 +57,7 @@ namespace MainCharacter
             actionAction = InputSystem.actions.FindAction("Action");
         }
 
-        void Update()
+        void FixedUpdate()
         {
             // Collect the move data here
             Vector2 characterCompleteMoveV2 = Vector2.zero;
@@ -85,10 +85,16 @@ namespace MainCharacter
                 ShoveObject(ref characterCompleteMoveV3);
             }
 
-            characterController.Move(characterCompleteMoveV3);
+            characterController.Move(characterCompleteMoveV3 * Time.fixedDeltaTime);
 
             if (!inputDisabled)
             {
+                // Code block for picking up and dropping small objects in the scene.
+                if (actionAction.WasPressedThisFrame())
+                {
+                    pickupController.InteractionAttempted();
+                }
+
                 CheckSpellCast();
             }
         }
@@ -141,7 +147,7 @@ namespace MainCharacter
             // Set to zero in case the re assignment doesn't happen later.
             Vector2 outMove = Vector2.zero;
 
-            outMove = PlayerMoveDirection() * playerSpeed * Time.deltaTime;
+            outMove = PlayerMoveDirection() * playerSpeed;
 
             return outMove;
         }
@@ -157,12 +163,8 @@ namespace MainCharacter
             if (difference.magnitude < playerSpeed * Time.deltaTime)
             {
                 inputDisabled = false;
-                outMove = difference;
             }
-            else
-            {
-                outMove = difference.normalized * playerSpeed * Time.deltaTime;
-            }
+            outMove = difference.normalized * playerSpeed;
 
             return outMove;
         }

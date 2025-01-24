@@ -1693,6 +1693,10 @@ PrefabInstance:
       propertyPath: barrier
       value: 
       objectReference: {fileID: 432437482}
+    - target: {fileID: 5132477320164249811, guid: 5d42d3c706c1b14d38a44e4876df1c3f, type: 3}
+      propertyPath: requiredShoveTime
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 8748580930765097044, guid: 5d42d3c706c1b14d38a44e4876df1c3f, type: 3}
       propertyPath: m_LocalPosition.x
       value: -5.540363

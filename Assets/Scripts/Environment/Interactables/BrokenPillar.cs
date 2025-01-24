@@ -63,7 +63,7 @@ namespace Environment.Interactables
         {
             if (canShove)
             {
-                currentShoveTime += Time.deltaTime;
+                currentShoveTime += Time.fixedDeltaTime;
                 currentResetTime = 0f;
                 if (currentShoveTime > requiredShoveTime)
                 {
