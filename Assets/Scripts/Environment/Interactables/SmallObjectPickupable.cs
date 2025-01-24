@@ -41,7 +41,7 @@ namespace Environment.Interactables
             return agent.CompareTag(Data.Globals.StaticTagStrings.PLAYER);
         }
 
-        public void PickupObject(GameObject agent)
+        public virtual void PickupObject(GameObject agent)
         {
         }
 

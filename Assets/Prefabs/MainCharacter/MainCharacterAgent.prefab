@@ -261,13 +261,14 @@ MonoBehaviour:
   playerSpeed: 10
   characterController: {fileID: 8490555644187202875}
   sPushRayCast:
-    localOffset: {x: 0, y: 0, z: 0}
-    isDirectionLocal: 0
-    direction: {x: 0, y: 0, z: 0}
-    MaxDistance: 0
+    localOffset: {x: 0, y: -0.25, z: 0}
+    isDirectionLocal: 1
+    direction: {x: 0, y: 0, z: 1}
+    MaxDistance: 0.7
     LayerMask:
       serializedVersion: 2
-      m_Bits: 0
+      m_Bits: 51
+  spell: {fileID: 0}
   pickupController: {fileID: 2690951646189200944}
 --- !u!1 &7247948768246850546
 GameObject:

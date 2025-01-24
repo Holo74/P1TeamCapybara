@@ -82,13 +82,19 @@ namespace MainCharacter
                 // Look at calculation might not be needed either.
                 transform.LookAt(transform.position + characterCompleteMoveV3);
 
-                PushBlock();
+                ShoveObject(ref characterCompleteMoveV3);
             }
 
-            characterController.Move(characterCompleteMoveV3);
+            characterController.Move(characterCompleteMoveV3 * Time.fixedDeltaTime);
 
             if (!inputDisabled)
             {
+                // Code block for picking up and dropping small objects in the scene.
+                if (actionAction.WasPressedThisFrame())
+                {
+                    pickupController.InteractionAttempted();
+                }
+
                 CheckSpellCast();
             }
         }
@@ -96,15 +102,14 @@ namespace MainCharacter
         /// <summary>
         /// Logic for pushing blocks.  Currently only handles small blocks.
         /// </summary>
-        private void PushBlock()
+        private void ShoveObject(ref Vector3 direction)
         {
             RaycastHit hitInfo;
-            if (Physics.Raycast(sPushRayCast.Origin(transform.position), sPushRayCast.Direction(transform), out hitInfo, sPushRayCast.MaxDistance, sPushRayCast.LayerMask))
+            if (SRaycast.CastRayUsingSRaycast(sPushRayCast, transform.position, transform, out hitInfo, true))
             {
-                if (hitInfo.transform.CompareTag(Data.Globals.StaticTagStrings.SMALL_BLOCK))
+                if (hitInfo.transform.CompareTag(Data.Globals.StaticTagStrings.SHOVEABLE))
                 {
-                    // Pushing block logic goes here.  Call to the block and trigger the function when it gets programmed.
-                    // hitInfo.collider.GetComponent()
+                    direction = hitInfo.transform.GetComponent<AShoveable>().Shoving(direction);
                 }
             }
         }
@@ -142,7 +147,7 @@ namespace MainCharacter
             // Set to zero in case the re assignment doesn't happen later.
             Vector2 outMove = Vector2.zero;
 
-            outMove = PlayerMoveDirection() * playerSpeed * Time.fixedDeltaTime;
+            outMove = PlayerMoveDirection() * playerSpeed;
 
             return outMove;
         }
@@ -155,15 +160,11 @@ namespace MainCharacter
         {
             Vector2 outMove = Vector2.zero;
             Vector2 difference = (forcedMovementDestination - fromVector3(transform.position));
-            if (difference.magnitude < playerSpeed * Time.fixedDeltaTime)
+            if (difference.magnitude < playerSpeed * Time.deltaTime)
             {
                 inputDisabled = false;
-                outMove = difference;
             }
-            else
-            {
-                outMove = difference.normalized * playerSpeed * Time.fixedDeltaTime;
-            }
+            outMove = difference.normalized * playerSpeed;
 
             return outMove;
         }

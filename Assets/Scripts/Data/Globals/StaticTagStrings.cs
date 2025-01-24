@@ -22,6 +22,9 @@ namespace Data.Globals
 
         // Environment Triggers
         public const string TRIGGER = "Trigger";
+
+        // For objects that the player can move into and it'll push them
+        public const string SHOVEABLE = "Shoveable";
     }
 
 }
