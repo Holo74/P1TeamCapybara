@@ -57,7 +57,7 @@ namespace MainCharacter
             actionAction = InputSystem.actions.FindAction("Action");
         }
 
-        void FixedUpdate()
+        void Update()
         {
             // Collect the move data here
             Vector2 characterCompleteMoveV2 = Vector2.zero;
@@ -141,7 +141,7 @@ namespace MainCharacter
             // Set to zero in case the re assignment doesn't happen later.
             Vector2 outMove = Vector2.zero;
 
-            outMove = PlayerMoveDirection() * playerSpeed * Time.fixedDeltaTime;
+            outMove = PlayerMoveDirection() * playerSpeed * Time.deltaTime;
 
             return outMove;
         }
@@ -154,14 +154,14 @@ namespace MainCharacter
         {
             Vector2 outMove = Vector2.zero;
             Vector2 difference = (forcedMovementDestination - fromVector3(transform.position));
-            if (difference.magnitude < playerSpeed * Time.fixedDeltaTime)
+            if (difference.magnitude < playerSpeed * Time.deltaTime)
             {
                 inputDisabled = false;
                 outMove = difference;
             }
             else
             {
-                outMove = difference.normalized * playerSpeed * Time.fixedDeltaTime;
+                outMove = difference.normalized * playerSpeed * Time.deltaTime;
             }
 
             return outMove;
