@@ -20,6 +20,9 @@ namespace Data.Globals
         // Player Tag
         public const string PLAYER = "Player";
 
+        // Enemy Tag
+        public const string ENEMY = "Enemy";
+
         // Environment Triggers
         public const string TRIGGER = "Trigger";
 

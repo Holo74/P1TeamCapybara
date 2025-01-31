@@ -8,6 +8,7 @@ TagManager:
   - ObjectHolder
   - SmallBlock
   - Shoveable
+  - Enemy
   layers:
   - Default
   - TransparentFX
